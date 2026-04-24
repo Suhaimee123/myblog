@@ -6,6 +6,8 @@ import CommentSection from "@/app/components/blog/CommentSection";
 import ImageGallery from "@/app/components/blog/ImageGallery";
 import ServerToastHandler from "@/app/components/ui/ServerToastHandler";
 
+import Breadcrumb from "@/app/components/ui/Breadcrumb";
+
 export default async function BlogDetail({
   params,
 }: {
@@ -20,7 +22,7 @@ export default async function BlogDetail({
   try {
     // Axios call on Server Side
     blog = await httpClient.get<Blog>(`/blogs/${slug}`);
-    
+
     if (blog) {
       comments = await httpClient.get<Comment[]>("/comments", {
         params: { blogId: blog.id },
@@ -45,21 +47,29 @@ export default async function BlogDetail({
   }
 
   return (
-    <article className="max-w-4xl mx-auto space-y-16">
+    <article className="max-w-4xl mx-auto space-y-8">
       <ServerToastHandler error={fetchError} />
-      <ArticleHeader 
-        title={blog.title} 
-        createdAt={blog.createdAt} 
-        viewCount={blog.viewCount} 
+      
+      <Breadcrumb 
+        items={[
+          { label: "Blogs", href: "/" },
+          { label: blog.title }
+        ]} 
+      />
+
+      <ArticleHeader
+        title={blog.title}
+        createdAt={blog.createdAt}
+        viewCount={blog.viewCount}
       />
 
       {/* Unified Article Premium Card */}
       <div className="relative group">
         {/* Decorative Background Glow */}
         <div className="absolute -inset-4 bg-gradient-to-r from-indigo-500/10 to-purple-500/10 rounded-[4rem] blur-3xl opacity-50 group-hover:opacity-100 transition duration-1000" />
-        
+
         <div className="relative bg-white/80 dark:bg-zinc-900/80 backdrop-blur-3xl rounded-[3.5rem] border border-white/20 dark:border-zinc-800 shadow-2xl overflow-hidden">
-          
+
           {/* 1. Dynamic Image Gallery (Client Component) */}
           <ImageGallery images={blog.additionalImages || []} title={blog.title} />
 
@@ -78,19 +88,19 @@ export default async function BlogDetail({
             </div>
 
             {/* 3. Main Content Body */}
-            <div 
+            <div
               className="prose prose-zinc dark:prose-invert prose-lg md:prose-2xl max-w-none 
               prose-headings:font-black prose-headings:tracking-tighter
               prose-p:leading-relaxed prose-p:text-zinc-600 dark:prose-p:text-zinc-400
               prose-img:rounded-[3rem] prose-img:shadow-2xl"
-              dangerouslySetInnerHTML={{ __html: blog.content }} 
+              dangerouslySetInnerHTML={{ __html: blog.content }}
             />
 
             {/* 4. Comment Section (Now Inside) */}
-            <CommentSection 
+            <CommentSection
               blogId={blog.id}
-              comments={comments} 
-              allowComments={blog.allowComments} 
+              comments={comments}
+              allowComments={blog.allowComments}
             />
           </div>
         </div>
