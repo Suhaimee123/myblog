@@ -1,3 +1,18 @@
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "MyBlog | พื้นที่แบ่งปันความรู้ด้านการเขียนโปรแกรมและเทคโนโลยี",
+  description: "บล็อกส่วนตัวที่รวบรวมบทความเกี่ยวกับ Next.js, NestJS, Tailwind CSS และเทคนิคการพัฒนาซอฟต์แวร์ยุคใหม่",
+  keywords: ["โปรแกรมมิ่ง", "Next.js", "NestJS", "Tailwind CSS", "สอนเขียนเว็บ", "MyBlog"],
+  openGraph: {
+    title: "MyBlog | พื้นที่แบ่งปันความรู้",
+    description: "รวมบทความเทคโนโลยีและประสบการณ์การเขียนโปรแกรม",
+    type: "website",
+    url: "https://your-blog-url.com",
+    siteName: "MyBlog",
+  },
+};
+
 import httpClient from "@/app/lib/api";
 import { Blog, ApiResponse } from "@/app/lib/types";
 import BlogCard from "@/app/components/BlogCard";
@@ -13,7 +28,10 @@ export default async function Home({
   const searchParams = await searchParamsProp;
   const search = searchParams?.search || "";
   
-  let blogs: ApiResponse<Blog> = { data: [], total: 0, page: 1, limit: 10 };
+  let blogs: ApiResponse<Blog> = { 
+    data: [], 
+    meta: { total: 0, page: 1, limit: 10, totalPages: 0 } 
+  };
   let fetchError = "";
   
   try {
@@ -35,7 +53,7 @@ export default async function Home({
         <div className="flex items-center justify-between border-b border-zinc-200 dark:border-zinc-800 pb-6">
           <h2 className="text-3xl font-black tracking-tight">บทความล่าสุด</h2>
           <div className="px-4 py-1 bg-indigo-500/10 text-indigo-600 rounded-full text-sm font-bold">
-            {blogs.total} บทความ
+            {blogs.meta.total} บทความ
           </div>
         </div>
 

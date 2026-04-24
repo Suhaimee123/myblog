@@ -1,12 +1,37 @@
 import httpClient from "@/app/lib/api";
 import { Blog, Comment } from "@/app/lib/types";
 import { notFound } from "next/navigation";
+import { Metadata } from "next";
 import ArticleHeader from "@/app/components/blog/ArticleHeader";
 import CommentSection from "@/app/components/blog/CommentSection";
 import ImageGallery from "@/app/components/blog/ImageGallery";
 import ServerToastHandler from "@/app/components/ui/ServerToastHandler";
-
 import Breadcrumb from "@/app/components/ui/Breadcrumb";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  try {
+    const blog = await httpClient.get<Blog>(`/blogs/${slug}`);
+    return {
+      title: `${blog.title} | MyBlog`,
+      description: blog.summary,
+      alternates: {
+        canonical: `https://your-blog-url.com/blog/${slug}`,
+      },
+      openGraph: {
+        title: blog.title,
+        description: blog.summary,
+        images: blog.additionalImages?.[0]?.url ? [blog.additionalImages[0].url] : [],
+      },
+    };
+  } catch (error) {
+    return { title: "Blog Detail | MyBlog" };
+  }
+}
 
 export default async function BlogDetail({
   params,
@@ -20,34 +45,41 @@ export default async function BlogDetail({
   let fetchError = "";
 
   try {
-    // Axios call on Server Side
     blog = await httpClient.get<Blog>(`/blogs/${slug}`);
-
     if (blog) {
       comments = await httpClient.get<Comment[]>("/comments", {
         params: { blogId: blog.id },
       });
     }
   } catch (error: any) {
-    console.error("Failed to fetch blog detail on server:", error);
-    fetchError = error.message || "ไม่สามารถดึงข้อมูลบทความได้";
+    console.error("Failed to fetch blog detail:", error);
+    fetchError = error.message || "Failed to load blog";
   }
 
-  if (!blog) {
-    if (fetchError) {
-      return (
-        <div className="max-w-4xl mx-auto py-20 text-center space-y-4">
-          <ServerToastHandler error={fetchError} />
-          <h1 className="text-2xl font-bold text-red-500">เกิดข้อผิดพลาดในการโหลดข้อมูล</h1>
-          <p className="text-zinc-500">กรุณาลองใหม่อีกครั้งในภายหลัง</p>
-        </div>
-      );
-    }
-    return notFound();
-  }
+  if (!blog) return notFound();
+
+  // 1. Prepare JSON-LD
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": blog.title,
+    "description": blog.summary,
+    "image": blog.additionalImages?.[0]?.url || "",
+    "datePublished": blog.createdAt,
+    "author": {
+      "@type": "Person",
+      "name": "Administrator", // หรือชื่อคนเขียนจริง
+    },
+  };
 
   return (
     <article className="max-w-4xl mx-auto space-y-8">
+      {/* 2. Add JSON-LD to page */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      
       <ServerToastHandler error={fetchError} />
       
       <Breadcrumb 
