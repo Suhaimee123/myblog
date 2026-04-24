@@ -10,7 +10,7 @@ interface ArticleHeaderProps {
 export default function ArticleHeader({ title, createdAt, viewCount }: ArticleHeaderProps) {
   return (
     <header className="space-y-6 text-center">
-      <h1 className="text-3xl md:text-6xl font-black leading-tight tracking-tight">
+      <h1 className="text-2xl md:text-4xl font-black leading-tight tracking-tight text-zinc-900 dark:text-zinc-100">
         {title}
       </h1>
 

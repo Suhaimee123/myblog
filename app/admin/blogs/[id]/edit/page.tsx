@@ -3,7 +3,7 @@
 import { useEffect, useState, use } from "react";
 import { fetchApi } from "@/app/lib/api";
 import { Blog } from "@/app/lib/types";
-import BlogForm from "@/app/components/BlogForm";
+import BlogForm from "../../_components/BlogForm";
 import { Loader2 } from "lucide-react";
 
 export default function EditBlogPage({ params }: { params: Promise<{ id: string }> }) {
@@ -14,12 +14,8 @@ export default function EditBlogPage({ params }: { params: Promise<{ id: string 
   useEffect(() => {
     const fetchBlog = async () => {
       try {
-        // We need to get blog by ID, but our public API only has slug.
-        // Assuming there's an admin endpoint or we can use the ID in some way.
-        // For now, let's assume /blogs/id-check/:id or similar might work or just fetch all and filter
-        const res = await fetchApi<ApiResponse<Blog>>("/blogs");
-        const found = res.data.find(b => b.id === id);
-        if (found) setBlog(found);
+        const res = await fetchApi<Blog>(`/admin/blogs/${id}`);
+        setBlog(res);
       } catch (error) {
         console.error("Failed to fetch blog for editing:", error);
       } finally {

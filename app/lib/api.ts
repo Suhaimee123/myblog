@@ -6,6 +6,7 @@ class HttpClient {
   private instance: AxiosInstance;
 
   constructor() {
+    console.log("Initializing HttpClient with baseURL:", API_URL);
     this.instance = axios.create({
       baseURL: API_URL,
       headers: {

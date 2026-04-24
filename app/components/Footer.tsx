@@ -46,21 +46,7 @@ export default function Footer() {
         <div className="flex items-center gap-6">
           {isLoggedIn ? (
             <div className="flex items-center gap-4">
-              <Link 
-                href="/admin/dashboard" 
-                className="text-xs font-bold uppercase tracking-widest text-zinc-400 hover:text-indigo-600 transition-colors flex items-center gap-1.5"
-              >
-                <LayoutDashboard size={14} />
-                Dashboard
-              </Link>
-              <Link 
-                href="/admin/blogs/new" 
-                className="text-xs font-bold uppercase tracking-widest text-zinc-400 hover:text-indigo-600 transition-colors flex items-center gap-1.5"
-              >
-                <Plus size={14} />
-                New Post
-              </Link>
-              <button 
+              <button
                 onClick={handleLogout}
                 className="text-xs font-bold uppercase tracking-widest text-zinc-400 hover:text-red-500 transition-colors flex items-center gap-1.5"
               >
@@ -69,8 +55,8 @@ export default function Footer() {
               </button>
             </div>
           ) : (
-            <Link 
-              href="/login" 
+            <Link
+              href="/login"
               className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-300 dark:text-zinc-700 hover:text-zinc-500 dark:hover:text-zinc-500 transition-colors flex items-center gap-1"
             >
               <Shield size={10} />

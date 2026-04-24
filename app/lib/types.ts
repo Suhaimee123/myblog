@@ -9,27 +9,25 @@ export interface Blog {
   viewCount: number;
   createdAt: string;
   updatedAt: string;
-  additionalImages: BlogImage[];
-}
-
-export interface BlogImage {
-  id: string;
-  url: string;
-  blogId: string;
+  additionalImages?: { id: string; url: string }[];
+  comments?: Comment[];
 }
 
 export interface Comment {
   id: string;
   name: string;
   message: string;
-  approved: boolean;
+  status: 'PENDING' | 'APPROVED' | 'REJECTED';
   createdAt: string;
   blogId: string;
 }
 
 export interface ApiResponse<T> {
   data: T[];
-  total: number;
-  page: number;
-  limit: number;
+  meta: {
+    total: number;
+    page: number;
+    limit: number;
+    totalPages: number;
+  };
 }
