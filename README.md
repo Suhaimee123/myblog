@@ -1,36 +1,74 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎨 MyBlog - Frontend (Next.js 15)
 
-## Getting Started
+หน้ากากบล็อกส่วนตัวระดับพรีเมียมที่เน้นความเร็ว ความสวยงาม และ SEO โดยใช้เทคโนโลยีล่าสุดจาก Next.js 15
 
-First, run the development server:
+---
+
+## 🛠 Tech Stack
+
+- **Framework**: Next.js 15 (App Router)
+- **Styling**: Tailwind CSS
+- **Animation**: Framer Motion
+- **Icons**: Lucide React
+- **Data Fetching**: Axios & HttpClient pattern
+- **Notification**: Sonner (Toast)
+
+---
+
+## 🚀 Getting Started
+
+### 1. ติดตั้ง Dependencies
+
+```bash
+npm install
+```
+
+### 2. ตั้งค่า Environment Variables
+
+สร้างไฟล์ `.env.local` ไว้ที่ Root ของโฟลเดอร์ `myblog`:
+
+```env
+NEXT_PUBLIC_API_URL=http://localhost:8080
+```
+
+### 3. รันโปรเจกต์ (Development)
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+เปิดบราวเซอร์ไปที่ [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📁 Folder Structure
 
-## Learn More
+- `app/`: หน้าเว็บหลักและระบบ Routing (App Router)
+- `components/`: UI Components แยกตามส่วนการใช้งาน (blog, home, ui)
+- `lib/`: ฟังก์ชันเสริม, API Client และการจัดการ Type
+- `public/`: ไฟล์รูปภาพและ Assets คงที่
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 💎 Key Features ในฝั่ง Frontend
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Glassmorphism Design**: พื้นหลังโปร่งแสงพร้อมเบลอ (Backdrop Blur) ให้ความรู้สึกหรูหรา
+- **Dynamic SEO**: ระบบ Generate Metadata อัตโนมัติในหน้าบทความ
+- **Interactive Comment Form**: ฟอร์มคอมเมนต์ที่แก้ชื่อเองได้และมีระบบสุ่มชื่อ
+- **Image Gallery**: ระบบแสดงรูปภาพหลายใบพร้อมแอนิเมชันตอนเปลี่ยนรูป
+- **Breadcrumbs**: ระบบนำทางที่ช่วยให้ผู้ใช้ไม่หลงทาง
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📦 Production Build
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+หากต้องการ Build เพื่อใช้งานจริง:
+
+```bash
+npm run build
+npm run start
+```
+
+---
+
+Created with  by Antigravity
