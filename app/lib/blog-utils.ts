@@ -19,7 +19,7 @@ export const getUniqueId = async (): Promise<string> => {
   while (!isUnique) {
     newId = generateShortId();
     try {
-      const { exists } = await httpClient.get<{ exists: boolean }>(`/blogs/check-id/${newId}`);
+      const { exists } = await httpClient.get<{ exists: boolean }>(`/admin/blogs/check-id/${newId}`);
       if (!exists) isUnique = true;
     } catch (error) {
       // ถ้าเช็คไม่ได้ ให้ถือว่าใช้ได้ (หรือจัดการตามความเหมาะสม)

@@ -43,10 +43,31 @@ npm run dev
 
 ## 📁 Folder Structure
 
-- `app/`: หน้าเว็บหลักและระบบ Routing (App Router)
-- `components/`: UI Components แยกตามส่วนการใช้งาน (blog, home, ui)
-- `lib/`: ฟังก์ชันเสริม, API Client และการจัดการ Type
-- `public/`: ไฟล์รูปภาพและ Assets คงที่
+โครงสร้างของโปรเจกต์ถูกจัดระเบียบตามมาตรฐานของ Next.js (App Router) ดังนี้:
+
+### 1. `app/` (Core Routes & Pages)
+- **`admin/`**: ระบบหลังบ้านสำหรับจัดการบทความและคอมเมนต์
+  - `dashboard/`: หน้าตารางรวมข้อมูล (Management Overview)
+  - `blogs/`: ฟอร์มสร้างและแก้ไขบทความ (Create/Edit Blog)
+- **`blog/`**: ส่วนแสดงผลบทความสำหรับบุคคลทั่วไป
+  - `[slug]/`: หน้ารายละเอียดบทความรายชิ้น (Dynamic Route)
+- **`login/`**: หน้าเข้าสู่ระบบสำหรับ Admin
+- **`layout.tsx`**: โครงสร้างหลัก (Navbar, Footer, Providers) ที่ใช้ร่วมกันทั้งเว็บ
+- **`page.tsx`**: หน้าแรกของเว็บไซต์ (Home Page)
+
+### 2. `app/components/` (UI & Feature Components)
+- **`blog/`**: คอมโพเนนต์เฉพาะสำหรับหน้าบทความ (เช่น `CommentForm`, `ArticleHeader`)
+- **`home/`**: คอมโพเนนต์สำหรับหน้าแรก (เช่น `Hero`, `SearchBar`)
+- **`ui/`**: คอมโพเนนต์พื้นฐานที่นำกลับมาใช้ซ้ำได้ (เช่น `Button`, `Input`, `Card`, `Breadcrumb`)
+
+### 3. `app/lib/` (Utilities & Logic)
+- **`api.ts`**: การตั้งค่า `HttpClient` (Axios) เพื่อเชื่อมต่อกับ Backend
+- **`types.ts`**: คำนิยาม TypeScript Interfaces ทั้งหมด (Blog, Comment, API Response)
+- **`utils.ts`**: ฟังก์ชันช่วยเหลือทั่วไป (เช่น การจัดรูปแบบวันที่, การสุ่มชื่อ)
+- **`blog-utils.ts`**: ฟังก์ชันเฉพาะทางสำหรับการจัดการบล็อกและไฟล์รูปภาพ
+
+### 4. `public/` (Assets)
+- เก็บไฟล์รูปภาพ Static, โลโก้ และไฟล์ Assets ต่างๆ
 
 ---
 
