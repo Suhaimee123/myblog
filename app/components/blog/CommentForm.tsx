@@ -59,16 +59,27 @@ export default function CommentForm({ blogId, onSuccess }: CommentFormProps) {
   };
 
   const identityHeader = (
-    <div className="flex items-center gap-3 px-4 py-2 bg-zinc-100 dark:bg-zinc-800 rounded-2xl border border-zinc-200 dark:border-zinc-700">
-      <UserIcon size={16} className="text-indigo-500" />
-      <span className="text-sm font-bold text-zinc-600 dark:text-zinc-300">{name}</span>
+    <div className="flex items-center gap-2 px-4 py-2 bg-zinc-100 dark:bg-zinc-800 rounded-2xl border border-zinc-200 dark:border-zinc-700 group focus-within:border-indigo-500/50 transition-colors">
+      <UserIcon size={16} className="text-indigo-500 shrink-0" />
+      <input 
+        type="text"
+        value={name}
+        onChange={(e) => {
+          const n = e.target.value;
+          setName(n);
+          localStorage.setItem("commenter_name", n);
+        }}
+        placeholder="ระบุชื่อของคุณ..."
+        className="text-sm font-bold text-zinc-600 dark:text-zinc-300 bg-transparent border-none p-0 focus:ring-0 w-full min-w-[80px] max-w-[150px]"
+      />
       <button 
+        type="button"
         onClick={() => {
           const n = generateRandomName();
           setName(n);
           localStorage.setItem("commenter_name", n);
         }}
-        className="p-1 hover:rotate-180 transition-transform duration-500 text-zinc-400 hover:text-indigo-500"
+        className="p-1 hover:rotate-180 transition-transform duration-500 text-zinc-400 hover:text-indigo-500 shrink-0"
       >
         <RefreshCw size={14} />
       </button>
